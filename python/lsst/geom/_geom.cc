@@ -16,13 +16,20 @@
  * see <https://www.lsstcorp.org/LegalNotices/>.
  */
 #include "pybind11/pybind11.h"
+#include "lsst/pyutils.h"
 
 namespace py = pybind11;
 
 namespace lsst { namespace geom {
 
+using pyutils::WrapperPtr;
+
+WrapperPtr declareInterval(py::handle scope);
+
 PYBIND11_PLUGIN(_geom) {
     py::module mod("_geom");
+    auto interval = declareInterval(mod);
+    interval->define();
     return mod.ptr();
 }
 
